@@ -34,9 +34,9 @@ class PlaceWidget extends StatelessWidget {
     Widget buttonsSection = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildColumn("CALL", Icons.call, Colors.blue),
-        _buildColumn("ROUTE", Icons.near_me, Colors.blue),
-        _buildColumn("SHARE", Icons.share, Colors.blue),
+        _buildColumn(context, "CALL", Icons.call, Colors.blue),
+        _buildColumn(context, "ROUTE", Icons.near_me, Colors.blue),
+        _buildColumn(context, "SHARE", Icons.share, Colors.blue),
       ],
     );
     Widget descriptionSection = Padding(
@@ -81,17 +81,33 @@ class PlaceWidget extends StatelessWidget {
     );
   }
 
-  Column _buildColumn(String title, IconData icon, Color color){
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color,),
-        Container(
-          margin: EdgeInsets.only(top: 8),
-          child: Text(title, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w400),),
-        )
-      ],
+  Widget _buildColumn(BuildContext context, String title, IconData icon, Color color){
+    return TextButton(
+      onPressed: ()=>ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.blue,
+              content: Row(
+                  children: [
+                    Icon(Icons.info, color: Colors.white,),
+                    SizedBox(width: 10,),
+                    Expanded(
+                        child: Text("Presionaste ${title}")
+                    )
+                  ]
+              )
+          )
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color,),
+          Container(
+            margin: EdgeInsets.only(top: 8),
+            child: Text(title, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w400),),
+          )
+        ],
+      ),
     );
   }
 }
